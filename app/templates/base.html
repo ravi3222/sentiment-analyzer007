@@ -1,0 +1,60 @@
+<html>
+  <head>
+    {% if title %}
+      <title>{{ title }}</title>
+    {% else %}
+      <title>Welcome to this site</title>
+    {% endif %}
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/main/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" type="text/css" href="/static/main/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="/static/main/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/main/lib/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="/static/main/lib/device-mockups/device-mockups.min.css">
+
+    <!-- Theme CSS -->
+    <link href="/static/main/css/new-age2.css" rel="stylesheet">
+    <!-- <link href="/static/main/css/dasda.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="/static/main/css/searchbar.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='offmuStyle.css') }}">
+
+    {% block head %}{% endblock %}
+  </head>
+
+
+  <body>
+    <div>Navigation:
+      <a href="/index">Home</a> |
+      <a href="/about">About</a>
+    </div>
+    <hr>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li>{{ message }} </li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}  {% endblock %}
+
+  </body>
+</html>

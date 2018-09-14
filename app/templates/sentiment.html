@@ -1,0 +1,96 @@
+<!-- extend from base layout -->
+{% extends "base.html" %}
+{% block head %}
+
+  <script src="../static/d3/d3.js"></script>
+{% endblock %}
+
+{% block content %}
+  <h1>Basic Text Analyser</h1>
+
+  <div>
+    <p>This tool analyses your plain text and tells you the most common words.<br>
+    This is considered the Hello World of Natural Language Processing.</p>
+  </div>
+
+  <h2>{{ inputTypeText }}</h2>
+  <p>
+          {{ originalText }}
+  </p>
+  <hr>
+    <h2>Main statistics:</h2>
+    <p>Overall Sentiment:  <span class="stats">   {{sentiment}}</span> </p>
+    <p>Positive Score:  <span class="stats">   {{ sentiment_scores['pos'] }}</span> (include spaces)</p>
+    <p>Neural Score:    <span class="stats">  {{ sentiment_scores['neu'] }} </span> </p>
+    <p>Negative Score:  <span class="stats">  {{ sentiment_scores['neg'] }} </span> </p>
+      <svg class="chart"></svg>
+
+  <script>
+
+  // Width and height of the canvas (SVG element)
+  var w = 500;
+  var h = 200;
+  var h_bar = 20;
+  var labelWidth = 0, margin = 40, paddingH = 2;
+    // get the data in dictionary (name, value)
+  var data = [];
+  {% for word, n in commonWords %}
+    data.push({name: "{{ word }}", value: {{n }} });
+  {% endfor %}
+
+  var x = d3.scaleLinear().range([0, w - margin*2 - labelWidth]);
+  x.domain([0, d3.max(data, function(d) { return d.value; })]);
+         // prepare for tooltip
+  var div = d3.select("body").append("div").attr("class", "toolTip");
+         // prepare chart
+  var chart = d3.select(".chart")
+        .attr("width", w)
+        .attr("height", h);
+
+            // attach the data; push the group over and down
+  var bar = chart.selectAll("g")
+            .data(data)
+            .enter().append("g")
+            .attr("transform", function(d, i) { return "translate(" + margin + "," + i * h_bar + ")"; });
+
+            // add label (=the word) at the beginning
+ bar.append("text")
+            .attr("y", h_bar / 2)  // label centered vertically
+            .attr("dy", ".35em") // vertical align middle
+            .text(function(d){  return d.name;
+                            }).each(function() {
+                                  labelWidth = Math.ceil(Math.max(labelWidth, this.getBBox().width));
+                            });
+
+           // add bar
+  bar.append("rect")
+          .attr("transform", "translate("+labelWidth+", 0)") // start after margin for label
+          .attr("width", function(d) { return x(d.value); }) // length depends on word count
+          .attr("height", h_bar - paddingH);  // leave some padding between bars
+
+          // add word count inside the bar
+  bar.append("text")
+          .attr("class", "value")  // bigger font, white
+          .attr("x", function(d) { return x(d.value); })
+          .attr("y", h_bar / 2)
+          .attr("dx", labelWidth - 5) //margin right
+          .attr("dy", ".35em")
+          .text(function(d) { return d.value; });  // word count
+
+  bar.on("mousemove", function(d){
+                      div.style("left", d3.event.pageX+10+"px");
+                      div.style("top", d3.event.pageY-25+"px");
+                      div.style("display", "inline-block");
+                      div.html((d.name)+"<br>"+(d.value / {{ numTokens }})+"%");
+                  });
+  bar.on("mouseout", function(d){
+                      div.style("display", "none");
+                  });
+
+  function type(d) {
+        d.value = +d.value; // coerce to number
+        return d;
+      }
+  </script>
+
+{% endblock %}
