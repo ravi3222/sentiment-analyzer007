@@ -42,8 +42,7 @@ Now, to start the app you just run this script. Then the script can simply be ex
 
     python run.py
 
-After the server initializes it will listen on port 5000 waiting for connections.  
-Now open up your web browser and enter one of the following URLs in the address field:
+After the server initializes, you can connect on port 5000. Open the web browser and connect one of the URLs:
 
     http://localhost:5000
 
@@ -66,9 +65,3 @@ Sentiment analysis
 
 The app can be tested on heroku [sentianalyzer007.herokuapp.com](https://sentianalyzer007.herokuapp.com/).
 
-
-## Built with:
-
-* [Python 3](https://www.python.org/downloads/) - the language
-* [Flask](http://flask.pocoo.org/) - the web micro-framework
-* [d3](https://d3js.org/) - the interactive graphics library
