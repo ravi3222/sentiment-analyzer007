@@ -22,7 +22,6 @@ There are two main features in SA.
 
 ### Prerequisites
 
-Everything you need is detailed in the requirements text file.  
 This app is built using **Python 3.6.6**
 
 
@@ -35,14 +34,15 @@ To clone and run this application, you'll need Git.
     
 
     # Open folder sentiment-analyzer007 and Install dependencies
-    # Please refer to Python and [Flask](http://flask.pocoo.org/) documentation
+    $ pip install requirements.txt
+    
 
 ## Start Service
-Now, to start the app you just run this script. Then the script can simply be executed as follows:
+Now, to start the application, do the following:
 
     python run.py
 
-After the server initializes, you can connect on port 5000. Open the web browser and connect one of the URLs:
+Server will start and  you can connect by opening the web browser and connecting one of the URLs:
 
     http://localhost:5000
 
