@@ -1,4 +1,4 @@
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 # next, we initialize VADER so we can use it within our Python script
 sid = SentimentIntensityAnalyzer()
 
